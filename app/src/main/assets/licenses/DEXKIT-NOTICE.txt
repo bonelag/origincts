@@ -1,0 +1,14 @@
+This APK uses the unmodified DexKit 2.2.0 library.
+
+DexKit Java/Kotlin code: Apache License 2.0
+DexKit native Core: GNU Lesser General Public License 3.0
+
+Corresponding source and license texts:
+https://github.com/LuckyPray/DexKit/tree/2.2.0
+https://github.com/LuckyPray/DexKit#license
+https://www.gnu.org/licenses/lgpl-3.0.html
+https://www.gnu.org/licenses/gpl-3.0.html
+
+The application source and build instructions are available in the same distribution as
+this notice. The application license does not prohibit reverse engineering for debugging
+modifications to DexKit.

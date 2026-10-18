@@ -1,0 +1,7 @@
+<resources>
+    <color name="page">#101218</color><color name="surface">#1D2029</color>
+    <color name="ink">#E5E7F0</color><color name="muted">#B2B9CB</color>
+    <color name="accent">#B3C5FF</color><color name="on_accent">#132A73</color>
+    <color name="accent_container">#293652</color><color name="outline">#343847</color>
+    <color name="ripple">#32B3C5FF</color>
+</resources>

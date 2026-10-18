@@ -1,0 +1,31 @@
+# Third-party notices
+
+OriginCTS source: Apache-2.0 (see LICENSE).
+
+## MiuiBackGestureHook
+
+Google action ID / constructor-capability resolution adapted from:
+https://github.com/wxxsfxyzm/MiuiBackGestureHook/blob/abe7d4d6f880422d7faef973bd9c90457d662495/app/src/main/java/dev/codex/miuibackgesturehook/hooks/googleapp/GoogleAppLiveTranslateRuntime.java
+
+Copyright: MiuiBackGestureHook contributors. Apache License 2.0.
+Changes: legacy Xposed API, standalone OriginOS module, all-code-split candidate uniqueness, transactional hook handles, caller deoptimization; no preferences/gesture/Lens features copied.
+Gradle wrapper launchers/JAR obtained from the same checkout, with distribution pinned to Gradle 8.11.1 and SHA-256 verification.
+
+## DexKit 2.2.0
+
+Unmodified Maven dependency org.luckypray:dexkit:2.2.0.
+Java/Kotlin API: Apache-2.0; native Core: LGPL-3.0.
+Source: https://github.com/LuckyPray/DexKit/tree/2.2.0
+License texts are bundled under app/src/main/assets/licenses and inside the APK.
+The native library can be replaced by rebuilding this supplied source with a modified compatible DexKit AAR. Reverse engineering for debugging modifications to DexKit is permitted.
+See DEXKIT-NOTICE.txt and upstream source for component notices.
+
+## Other dependencies
+
+- Kotlin stdlib 2.1.20: JetBrains, Apache-2.0.
+- FlatBuffers Java 23.5.26: Google, Apache-2.0 (DexKit transitive dependency).
+- Rikka cxx 1.2.0: native C++ runtime dependency; upstream https://github.com/RikkaW/NativeLibraries.
+- Xposed API 82: compile-only API; not packaged. https://github.com/rovo89/XposedBridge
+- JUnit 4.13.2: test only; not packaged. EPL-1.0.
+
+Google APK/framework dumps and development tool downloads are local analysis inputs, excluded from source distribution.

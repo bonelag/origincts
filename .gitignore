@@ -1,0 +1,19 @@
+.gradle/
+.gradle-cache/
+.tools/
+.reference/
+.device/
+OS5 File/
+.vscode/
+**/build/
+local.properties
+services.jar
+plans/
+*.jks
+*.keystore
+*.log
+dist/*
+!dist/OriginCTS-1.0.0-universal-debug.apk
+tools/DecompileSelected.java
+tools/DexProbe.java
+OS5 - Neo 10/

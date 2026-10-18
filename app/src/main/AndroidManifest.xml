@@ -1,0 +1,33 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <permission android:name="io.github.origincts.permission.START_CTS" android:protectionLevel="signature" />
+    <uses-permission android:name="io.github.origincts.permission.START_CTS" />
+    <queries><package android:name="com.google.android.googlequicksearchbox" /></queries>
+    <application android:label="OriginCTS" android:theme="@style/AppTheme"
+        android:allowBackup="false" android:icon="@drawable/ic_search">
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data android:name="xposeddescription" android:value="Native CTS for OriginOS 5/6 + Google Live Translate capability" />
+        <meta-data android:name="xposedminversion" android:value="82" />
+        <meta-data android:name="xposedscope" android:resource="@array/xposed_scope" />
+        <provider android:name=".SettingsProvider" android:authorities="io.github.origincts.settings" android:exported="true" android:directBootAware="true" />
+        <activity android:name=".AboutActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
+            </intent-filter>
+        </activity>
+        <activity-alias android:name=".Launcher" android:targetActivity=".MainActivity"
+            android:enabled="true" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+        <activity android:name=".LaunchActivity" android:exported="false" android:excludeFromRecents="true" android:theme="@android:style/Theme.Translucent.NoTitleBar" android:taskAffinity="" />
+        <service android:name=".SearchTile" android:exported="true"
+            android:label="Circle to Search" android:icon="@drawable/ic_search"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter><action android:name="android.service.quicksettings.action.QS_TILE" /></intent-filter>
+        </service>
+    </application>
+</manifest>
