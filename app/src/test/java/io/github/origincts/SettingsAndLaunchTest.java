@@ -11,12 +11,14 @@ public class SettingsAndLaunchTest {
         state = FeatureState.set(state, FeatureState.MASTER, false);
         assertFalse(FeatureState.enabled(state, FeatureState.CTS));
         assertFalse(FeatureState.enabled(state, FeatureState.TRANSLATE));
+        assertFalse(FeatureState.enabled(state, FeatureState.VOICE));
         state = FeatureState.set(state, FeatureState.MASTER, true);
         assertTrue(FeatureState.enabled(state, FeatureState.CTS));
         assertTrue(FeatureState.enabled(state, FeatureState.TRANSLATE));
+        assertTrue(FeatureState.enabled(state, FeatureState.VOICE));
         assertFalse(FeatureState.enabled(state, FeatureState.GEMINI));
-        assertEquals(FeatureState.ALL, FeatureState.set(FeatureState.ALL, 32, true));
-        assertFalse(FeatureState.enabled(FeatureState.ALL, 32));
+        assertEquals(FeatureState.ALL, FeatureState.set(FeatureState.ALL, 64, true));
+        assertFalse(FeatureState.enabled(FeatureState.ALL, 64));
     }
     @Test public void failedRequestDoesNotConsumeHome() {
         List<String> events = new ArrayList<>();

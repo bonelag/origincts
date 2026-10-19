@@ -16,6 +16,7 @@ public final class HookEntry implements IXposedHookLoadPackage {
             install("Framework", () -> FrameworkHooks.install(app.classLoader));
             install("Home", () -> HomeKeyHook.install(app.classLoader));
             install("Power", () -> PowerAssistantHook.install(app.classLoader));
+            install("Voice", () -> VoiceWakeupHook.install(app.classLoader));
         } else if (BridgeContract.SYSTEM_UI.equals(app.packageName)
                 && BridgeContract.SYSTEM_UI.equals(app.processName)) {
             install("Settings", () -> HookSettings.install(app.classLoader, false));

@@ -30,6 +30,8 @@ public final class MainActivity extends Activity {
         addSwitch(ui, shortcuts, FeatureState.CTS, "Circle to Search", "Hold Home or the centre of the navigation bar");
         ui.divider(shortcuts);
         addSwitch(ui, shortcuts, FeatureState.GEMINI, "Gemini", "Hold the power button for 0.5 seconds");
+        ui.divider(shortcuts);
+        addSwitch(ui, shortcuts, FeatureState.VOICE, "Voice Wakeup", "Say 'Hi Jovi' or 'Xiao V Xiao V' to open Gemini");
         ui.section("Translation");
         LinearLayout translation = ui.card();
         addSwitch(ui, translation, FeatureState.TRANSLATE, "Scroll and translate", "Translate while scrolling in Circle to Search");

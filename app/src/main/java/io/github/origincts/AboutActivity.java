@@ -19,7 +19,7 @@ public final class AboutActivity extends Activity {
         ui.divider(info);
         ui.row(info, "Built for OriginOS 5 and 6", "Android 15 / 16 · Current device: Android " + Build.VERSION.RELEASE);
         ui.divider(info);
-        ui.row(info, "Features", "Circle to Search, Scroll and translate, and Gemini");
+        ui.row(info, "Features", "Circle to Search, Scroll and translate, and Gemini (Power & Voice)");
         ui.section("Setup");
         LinearLayout setup = ui.card();
         ui.row(setup, "LSPosed", "Select System Framework, System UI, UpSlide and Google App.");
