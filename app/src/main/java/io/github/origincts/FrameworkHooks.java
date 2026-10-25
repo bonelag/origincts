@@ -8,6 +8,7 @@ import de.robv.android.xposed.XposedHelpers;
 final class FrameworkHooks {
     static void install(ClassLoader loader) throws Exception {
         ProviderConfig.install(loader);
+        CaptureExclusion.install(loader);
         Class<?> server = XposedHelpers.findClass("com.android.server.SystemServer", loader);
         boolean foundBootCaller = false;
         for (java.lang.reflect.Method method : server.getDeclaredMethods()) {

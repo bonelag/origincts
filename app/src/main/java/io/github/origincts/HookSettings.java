@@ -22,12 +22,28 @@ final class HookSettings {
     private static final AtomicBoolean dirty = new AtomicBoolean();
     private static volatile long retryAt;
     private static volatile Context context;
-    private static volatile int state; // Fail closed until persisted settings have been read.
+    // Vivo's cached-app freezer can make the provider unreachable seconds after start, so an
+    // unreadable provider must not disable features: keep the last known state and start permissive.
+    private static volatile int state = FeatureState.ALL;
     private static volatile boolean ready;
+    private static volatile boolean reported;
 
     static boolean enabled(int feature) {
-        if (!ready && context != null && android.os.SystemClock.uptimeMillis() >= retryAt) refresh();
-        return ready && FeatureState.enabled(state, feature);
+        if (!ready) {
+            long now = android.os.SystemClock.uptimeMillis();
+            if (now >= retryAt) {
+                retryAt = now + 1000; // One attempt per second at most, even on an input callback.
+                Integer global = SettingsStore.readGlobal();
+                if (global != null) {
+                    state = global;
+                    ready = true;
+                } else if (context != null) {
+                    refresh();
+                }
+            }
+            if (!ready) return FeatureState.enabled(state, feature); // Permissive until proven otherwise.
+        }
+        return FeatureState.enabled(state, feature);
     }
     static void install(ClassLoader loader, boolean system) {
         if (system) {
@@ -53,7 +69,9 @@ final class HookSettings {
         if (context != null) return;
         context = app.getApplicationContext() == null ? app : app.getApplicationContext();
         try {
-            context.getContentResolver().registerContentObserver(SettingsStore.URI, false,
+            // Settings.Global is served by system_server, so this observer survives the app being frozen.
+            context.getContentResolver().registerContentObserver(
+                    android.provider.Settings.Global.getUriFor(SettingsStore.GLOBAL_KEY), false,
                     new ContentObserver(new Handler(Looper.getMainLooper())) {
                         @Override public void onChange(boolean selfChange) { refresh(); }
                     });
@@ -68,14 +86,26 @@ final class HookSettings {
         if (!loading.compareAndSet(false, true)) return;
         WORKER.execute(() -> {
             dirty.set(false);
+            Integer global = SettingsStore.readGlobal();
+            if (global != null) {
+                state = global;
+                ready = true;
+            }
             try (Cursor cursor = context.getContentResolver().query(SettingsStore.URI, null, null, null, null)) {
                 if (cursor == null || !cursor.moveToFirst()) throw new IllegalStateException("Empty settings response");
                 state = cursor.getInt(0) & FeatureState.ALL;
                 ready = true;
+                reported = false;
             } catch (Throwable failure) {
+                // The provider is unreachable while Vivo freezes the app; the Global copy is authoritative then.
                 retryAt = android.os.SystemClock.uptimeMillis() + 1000;
-                ready = false;
-                HookEntry.log("Settings unavailable; shortcuts disabled: " + failure);
+                if (global == null) {
+                    ready = false;
+                    if (!reported) {
+                        reported = true;
+                        HookEntry.log("Settings unavailable; keeping previous state: " + failure);
+                    }
+                }
             } finally {
                 loading.set(false);
                 if (dirty.get()) refresh();

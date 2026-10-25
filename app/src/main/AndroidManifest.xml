@@ -1,6 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <permission android:name="io.github.origincts.permission.START_CTS" android:protectionLevel="signature" />
     <uses-permission android:name="io.github.origincts.permission.START_CTS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
     <queries><package android:name="com.google.android.googlequicksearchbox" /></queries>
     <application android:label="OriginCTS" android:theme="@style/AppTheme"
         android:allowBackup="false" android:icon="@drawable/ic_search">

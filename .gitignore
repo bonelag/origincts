@@ -17,3 +17,5 @@ dist/*
 tools/DecompileSelected.java
 tools/DexProbe.java
 OS5 - Neo 10/
+.analysis
+*.zip
