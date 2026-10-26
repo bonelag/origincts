@@ -31,7 +31,7 @@ public final class MainActivity extends Activity {
         ui.divider(shortcuts);
         addSwitch(ui, shortcuts, FeatureState.GEMINI, "Gemini", "Hold the power button for 0.5 seconds");
         ui.divider(shortcuts);
-        addSwitch(ui, shortcuts, FeatureState.VOICE, "Voice Wakeup", "Say 'Hi Jovi' or 'Xiao V Xiao V' to open Gemini");
+        addSwitch(ui, shortcuts, FeatureState.VOICE, "Voice Wakeup (Hey Google)", "Native Voice Match and Assistant wakeup");
         ui.section("Translation");
         LinearLayout translation = ui.card();
         addSwitch(ui, translation, FeatureState.TRANSLATE, "Scroll and translate", "Translate while scrolling in Circle to Search");
@@ -40,6 +40,7 @@ public final class MainActivity extends Activity {
         LinearLayout actions = ui.card();
         ctsButton = ui.button(actions, "Circle to Search", false, view -> launch(false));
         geminiButton = ui.button(actions, "Gemini", false, view -> launch(true));
+        ui.button(actions, "Voice Match Settings", false, view -> NativeVoiceManager.openSettings(this));
         ui.note("These buttons work even when the shortcuts are off.");
 
         ui.section("App");
@@ -88,8 +89,12 @@ public final class MainActivity extends Activity {
         control.setOnCheckedChangeListener((button, checked) -> {
             if (rendering) return;
             int next = FeatureState.set(state, feature, checked);
-            if (SettingsStore.write(this, next)) state = next;
-            else Toast.makeText(this, "Could not save settings. Try again.", Toast.LENGTH_LONG).show();
+            if (SettingsStore.write(this, next)) {
+                state = next;
+                if (feature == FeatureState.VOICE) {
+                    NativeVoiceManager.apply(this, checked);
+                }
+            } else Toast.makeText(this, "Could not save settings. Try again.", Toast.LENGTH_LONG).show();
             render();
         });
     }
