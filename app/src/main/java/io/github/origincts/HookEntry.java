@@ -9,7 +9,7 @@ public final class HookEntry implements IXposedHookLoadPackage {
     static final String GOOGLE = "com.google.android.googlequicksearchbox";
     @Override public void handleLoadPackage(XC_LoadPackage.LoadPackageParam app) {
         if (Build.VERSION.SDK_INT != 35 && Build.VERSION.SDK_INT != 36) return;
-        log("v0.10.3 sdk=" + Build.VERSION.SDK_INT + " package=" + app.packageName + " process=" + app.processName);
+        log("v0.10.5 sdk=" + Build.VERSION.SDK_INT + " package=" + app.packageName + " process=" + app.processName);
         if ("android".equals(app.packageName)
                 && ("android".equals(app.processName) || "system_server".equals(app.processName))) {
             install("Settings", () -> HookSettings.install(app.classLoader, true));
