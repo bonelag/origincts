@@ -38,8 +38,10 @@ jobs:
           java-version: '17'
           cache: 'gradle'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | sdkmanager --licenses || true
+          sdkmanager "platforms;android-36" || true
 
       - name: Auto-detect App Version
         id: version
